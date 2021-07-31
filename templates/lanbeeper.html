@@ -5,29 +5,51 @@
 <style>
     html, body {
         background-color: #ccc;
+        padding-top: 1em;
+    }
+    hr {
+        margin: 1em;
     }
     * {
-        margin: 1em auto;
+        margin: 0.25em auto;
         font-family: serif;
-        font-size: 28pt;
+        font-size: calc(16pt + 1vw);
         text-align: center;
     }
+    #head_msg {
+        padding-bottom: 1em;
+    }
     input[type=submit], #msg {
+        display: block;
         padding: 1em;
+    }
+    #textarea {
+        width: max(10em, 40vw);
+        height: max(5em, 20vh);
     }
 </style>
 <body>
+    <div id="head_msg" hidden>{{head_msg}}</div>
     <form method="post" action="/">
         <input id="beep_btn" type="submit" value="{{send_beep}}" name="beep" />
+        <hr>
+        <div id="text_lbl">{{send_text_lbl}}</div>
+        <textarea id="textarea" name="textarea"></textarea>
+        <input id="text_btn" type="submit" value="{{send_text}}" name="text" />
     </form>
-    <div id="msg">{{msg}}</div>
+    <div id="msg" hidden>{{msg}}</div>
     <script>
-        const beep_btn = document.getElementById('beep_btn')
+        const head_msg = document.getElementById('head_msg')
+        const form = document.querySelector('form')
         const msg = document.getElementById('msg')
         onload = function () {
-            beep_btn.disabled = !!'{{msg}}'
+            head_msg.hidden = !'{{head_msg}}'
+            form.hidden = !!'{{msg}}'
+            msg.hidden  =  !'{{msg}}'
             setTimeout(function () {
-                beep_btn.disabled = false
+                form.hidden = false
+                msg.hidden  =  true
+                textarea.innerHTML = ''
                 msg.innerHTML = ''
             }, 2000)
         }
