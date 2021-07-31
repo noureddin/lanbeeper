@@ -1,0 +1,36 @@
+<!doctype html>
+<html dir="{{html_dir}}" lang="{{html_lang}}">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>LanBeeper</title>
+<style>
+    html, body {
+        background-color: #ccc;
+    }
+    * {
+        margin: 1em auto;
+        font-family: serif;
+        font-size: 28pt;
+        text-align: center;
+    }
+    input[type=submit], #msg {
+        padding: 1em;
+    }
+</style>
+<body>
+    <form method="post" action="/">
+        <input id="beep_btn" type="submit" value="{{send_beep}}" name="beep" />
+    </form>
+    <div id="msg">{{msg}}</div>
+    <script>
+        const beep_btn = document.getElementById('beep_btn')
+        const msg = document.getElementById('msg')
+        onload = function () {
+            beep_btn.disabled = !!'{{msg}}'
+            setTimeout(function () {
+                beep_btn.disabled = false
+                msg.innerHTML = ''
+            }, 2000)
+        }
+    </script>
+</body>
+</html>
